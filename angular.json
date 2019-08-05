@@ -116,5 +116,8 @@
 			}
 		}
 	},
-	"defaultProject": "jmw-ng"
+	"defaultProject": "jmw-ng",
+	"cli": {
+		"defaultCollection": "@ngxs/schematics"
+	}
 }
