@@ -1,19 +1,15 @@
 {
-  "hosting": [
-    {
-      "target": "jmw-ng",
-      "public": "dist/jmw-ng",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    }
-  ]
+	"hosting": [
+		{
+			"target": "jmw-ng",
+			"public": "dist/jmw-ng",
+			"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+			"rewrites": [
+				{
+					"source": "**",
+					"destination": "/index.html"
+				}
+			]
+		}
+	]
 }
