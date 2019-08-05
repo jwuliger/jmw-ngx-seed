@@ -126,8 +126,13 @@
               "devServerTarget": "jmw-ng:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "jmw-ng"
 }
