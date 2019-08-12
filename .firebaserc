@@ -1,11 +1,11 @@
 {
-  "targets": {
-    "jmw-personal-website": {
-      "hosting": {
-        "jmw-ng": [
-          "jmw-personal-website"
-        ]
-      }
-    }
-  }
+	"targets": {
+		"jmw-personal-website": {
+			"hosting": {
+				"jmw-ng": [
+					"jmw-personal-website"
+				]
+			}
+		}
+	}
 }

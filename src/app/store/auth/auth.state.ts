@@ -1,4 +1,5 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+
 import { SetAuthData } from './auth.actions';
 
 export interface AuthenticationStateModel {

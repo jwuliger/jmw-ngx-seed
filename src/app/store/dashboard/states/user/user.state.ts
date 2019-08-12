@@ -1,4 +1,5 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+
 import { SetUser } from './user.actions';
 
 export interface PersonStateModel {
