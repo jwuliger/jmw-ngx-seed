@@ -1,3 +1,5 @@
+// tslint:disable: no-string-literal
+
 import 'reflect-metadata';
 import 'zone.js/dist/zone-node';
 
@@ -52,7 +54,7 @@ server.listen(PORT, () => {
 });
 
 // HMR on server side
-if (module.hot) {
+if (module['hot']) {
 	const hmr = () => {
 		try {
 			const { AppServerModuleNgFactory } = require('./app/app.server.module.ngfactory');
@@ -68,9 +70,9 @@ if (module.hot) {
 		}
 	};
 
-	module.hot.accept('./api', hmr);
-	module.hot.accept('./app/app.server.module', hmr);
-	module.hot.accept('./app/app.server.module.ngfactory', hmr);
+	module['hot'].accept('./api', hmr);
+	module['hot'].accept('./app/app.server.module', hmr);
+	module['hot'].accept('./app/app.server.module.ngfactory', hmr);
 }
 
 export default server;

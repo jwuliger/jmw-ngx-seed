@@ -13,19 +13,19 @@ export const OPTIONS_CONFIG: Partial<NgxsConfig> = {
 	 * Run in development mode. This will add additional debugging features:
 	 * - Object.freeze on the state and actions to guarantee immutability
 	 */
-	developmentMode: (environment.production === true)
+	developmentMode: environment.production === true
 };
 
 export const DEVTOOLS_REDUX_CONFIG: NgxsDevtoolsOptions = {
 	/**
 	 * Whether the dev tools is enabled or note. Useful for setting during production.
 	 */
-	disabled: (environment.production === true)
+	disabled: environment.production === true
 };
 
 export const LOGGER_CONFIG: NgxsLoggerPluginOptions = {
 	/**
 	 * Disable the logger. Useful for prod mode..
 	 */
-	disabled: (environment.production === true)
+	disabled: environment.production === true
 };

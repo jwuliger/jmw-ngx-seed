@@ -1,7 +1,7 @@
 // tslint:disable: object-literal-sort-keys
 
 module.exports = {
-	parser: "typescript",
+	parser: 'typescript',
 	printWidth: 140,
 	tabWidth: 4,
 	trailingComma: 'none',
@@ -11,5 +11,5 @@ module.exports = {
 	semi: true,
 	singleQuote: true,
 	proseWrap: 'preserve',
-	endOfLine: "auto"
+	endOfLine: 'auto'
 };

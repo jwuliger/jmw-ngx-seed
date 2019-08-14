@@ -4,9 +4,17 @@
 		"outDir": "./out-tsc/app-server",
 		"module": "commonjs"
 	},
-	"files": ["src/main.server.ts"],
+	"files": [
+		"src/main.server.ts"
+	],
 	"angularCompilerOptions": {
 		"entryModule": "./src/app/app.server.module#AppServerModule"
 	},
-	"exclude": ["**/*.spec.ts", "e2e/**", "src/app/app.browser.module.ts", "src/main.ts", "src/stories/**"]
+	"exclude": [
+		"**/*.spec.ts",
+		"e2e/**",
+		"src/app/app.browser.module.ts",
+		"src/main.ts",
+		"src/stories/**"
+	]
 }

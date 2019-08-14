@@ -61,9 +61,8 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
  * APPLICATION IMPORTS
  */
 
-
 declare interface NodeModule {
 	hot: {
-		accept(path?: () => void, callback?: () => void): void
-	}
+		accept(path?: () => void, callback?: () => void): void;
+	};
 }

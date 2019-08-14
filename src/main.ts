@@ -22,7 +22,6 @@ async function main(): Promise<NgModuleRef<AppBrowserModule>> {
 	const ngModuleRef = await platformBrowserDynamic().bootstrapModule(AppBrowserModule);
 	const appRef = ngModuleRef.injector.get(ApplicationRef);
 
-
 	if (module['hot']) {
 		module['hot'].accept();
 
