@@ -8,7 +8,7 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
+		"prettier": "prettier --write \"**/*.{js,ts}\"",
 		"start:augury": "ng serve --configuration augury",
 		"compile:server": "webpack --config webpack.server.config.js --progress --colors",
 		"serve:ssr": "node dist/server",
@@ -89,7 +89,7 @@
 		}
 	},
 	"lint-staged": {
-		"\"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"": [
+		"\"**/*.{js,ts}\"": [
 			"prettier --write",
 			"git add"
 		]
