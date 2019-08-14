@@ -1,62 +1,76 @@
-/**
- * *** NOTE ON IMPORTING FROM ANGULAR AND NGUNIVERSAL IN THIS FILE ***
- *
- * If your application uses third-party dependencies, you'll need to
- * either use Webpack or the Angular CLI's `bundleDependencies` feature
- * in order to adequately package them for use on the server without a
- * node_modules directory.
- *
- * However, due to the nature of the CLI's `bundleDependencies`, importing
- * Angular in this file will create a different instance of Angular than
- * the version in the compiled application code. This leads to unavoidable
- * conflicts. Therefore, please do not explicitly import from @angular or
- * @nguniversal in this file. You can export any needed resources
- * from your application's main.server.ts file, as seen below with the
- * import for `ngExpressEngine`.
- */
-
+import 'reflect-metadata';
 import 'zone.js/dist/zone-node';
 
-import * as express from 'express';
+import { enableProdMode } from '@angular/core';
+import { NgSetupOptions } from '@nguniversal/express-engine';
+import { MODULE_MAP } from '@nguniversal/module-map-ngfactory-loader';
+import { createServer } from 'http';
 import { join } from 'path';
 
-// Express server
-const app = express();
+import { createApi, ServerAPIOptions } from './src/app/api';
+import { environment } from './src/environments/environment.prod';
 
-const PORT = process.env.PORT || 4000;
-const DIST_FOLDER = join(process.cwd(), 'dist/browser');
+// WARN: don't remove export of AppServerModule.
+// Removing export below will break replaceServerBootstrap() transformer
+export { AppServerModule } from './src/app/app.server.module';
 
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP, ngExpressEngine, provideModuleMap } = require('./dist/server/main');
+// Faster server renders w/ Prod mode.
+// Prod mode isn't enabled by default because that breaks debugging tools like Augury.
+if (environment.production) {
+	enableProdMode();
+}
 
-// The Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-app.engine(
-	'html',
-	ngExpressEngine({
-		bootstrap: AppServerModuleNgFactory,
-		providers: [provideModuleMap(LAZY_MODULE_MAP)]
-	})
-);
+export const PORT = process.env.PORT || 4000;
+export const BROWSER_DIST_PATH = join(__dirname, '..', 'browser');
 
-app.set('view engine', 'html');
-app.set('views', DIST_FOLDER);
-
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
-// Serve static files from /browser
-app.get(
-	'*.*',
-	express.static(DIST_FOLDER, {
-		maxAge: '1y'
-	})
-);
-
-// All regular routes use the Universal engine
-app.get('*', (req, res) => {
-	res.render('index', { req });
+export const getNgRenderMiddlewareOptions: () => NgSetupOptions = () => ({
+	bootstrap: exports.AppServerModuleNgFactory,
+	providers: [
+		// Import module map for lazy loading
+		{
+			provide: MODULE_MAP,
+			useFactory: () => exports.LAZY_MODULE_MAP,
+			deps: []
+		}
+	]
 });
+
+export const getServerAPIOptions: () => ServerAPIOptions = () => ({
+	distPath: BROWSER_DIST_PATH,
+	ngSetup: getNgRenderMiddlewareOptions()
+});
+
+let requestListener = createApi(getServerAPIOptions());
 
 // Start up the Node server
-app.listen(PORT, () => {
-	console.log(`Node Express server listening on http://localhost:${PORT}`);
+const server = createServer((req, res) => {
+	requestListener(req, res);
 });
+
+server.listen(PORT, () => {
+	console.log(`Server listening -- http://localhost:${PORT}`);
+});
+
+// HMR on server side
+if (module.hot) {
+	const hmr = () => {
+		try {
+			const { AppServerModuleNgFactory } = require('./app/app.server.module.ngfactory');
+			exports.AppServerModuleNgFactory = AppServerModuleNgFactory;
+		} catch (err) {
+			console.warn(`[HMR] Cannot update export of AppServerModuleNgFactory. ${err.stack || err.message}`);
+		}
+
+		try {
+			requestListener = require('./api').createApi(getServerAPIOptions());
+		} catch (err) {
+			console.warn(`[HMR] Cannot update server api. ${err.stack || err.message}`);
+		}
+	};
+
+	module.hot.accept('./api', hmr);
+	module.hot.accept('./app/app.server.module', hmr);
+	module.hot.accept('./app/app.server.module.ngfactory', hmr);
+}
+
+export default server;

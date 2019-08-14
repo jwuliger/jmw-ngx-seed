@@ -67,6 +67,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 		CdkTableModule,
 		CdkTreeModule,
 		DragDropModule,
+
 		// Material
 		MatAutocompleteModule,
 		MatBadgeModule,
