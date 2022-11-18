@@ -48,7 +48,7 @@
 	},
 	"devDependencies": {
 		"@angular-devkit/architect": "^0.802.2",
-		"@angular-devkit/build-angular": "~0.802.2",
+		"@angular-devkit/build-angular": "~15.0.0",
 		"@angular/cli": "~8.2.2",
 		"@angular/compiler-cli": "~8.2.2",
 		"@angular/language-service": "~8.2.2",
@@ -81,7 +81,7 @@
 		"tslint-config-prettier": "1.18.0",
 		"typescript": "~3.5.3",
 		"udk": "^1.1.7",
-		"webpack-cli": "^3.3.7"
+		"webpack-cli": "^3.3.12"
 	},
 	"husky": {
 		"hooks": {
